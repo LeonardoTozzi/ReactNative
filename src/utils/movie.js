@@ -7,3 +7,9 @@ export function getListMovies(size, movies){
     }
     return popularMovies;
 }
+
+
+// Gweral um n´mero aleatório com base no tamnho da lista de filme que eu passar
+export function randomBanner(movies){
+    return Math.floor(Math.random() * movies.length)
+}
