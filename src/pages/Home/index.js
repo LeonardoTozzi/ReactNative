@@ -26,6 +26,7 @@ const [nowMovies, setNowMovies] = useState([]);
 const [popularMovies, setPopularMovies] = useState([]);
 const [topMovies, setTopMovies] = useState([]);
 const [bannerMovie, setBannerMovie] = useState({});
+const [input, setInput] = useState('');
 
 const [loading, setLoading] = useState(true);
 
@@ -101,6 +102,14 @@ useEffect(()=>{
         navigation.navigate('Detail', { id: item.id })
     }
 
+    function headleSearchMovie(){
+
+        if(input === ``)return;
+       
+        navigation.navigate('Search', { name: input})
+        setInput('');
+    }
+
 
     if(loading){
         return(
@@ -118,8 +127,10 @@ useEffect(()=>{
                 <Input
                 placeholder="Ex Vingadores"
                 placeholderTextColor="#ddd"
+                value={input}
+                onChangeText={ (text) => setInput(text) }
                 />
-                <SearchButton>
+                <SearchButton onPress={ headleSearchMovie }>
                     <Feather name="search" size={30} color="#FFF"/>
 
                 </SearchButton>
