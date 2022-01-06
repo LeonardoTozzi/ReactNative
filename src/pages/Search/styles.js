@@ -8,4 +8,4 @@ export const Container = styled.View`
 
 `;
 
-export const Name = styled.Text``; 
+export const ListMovies = styled.FlatList``; 

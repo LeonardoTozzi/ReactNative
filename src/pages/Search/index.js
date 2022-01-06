@@ -1,9 +1,11 @@
 import React, { useState, useEffect} from 'react';
-import { Container, Name } from './styles';
+import { Container, ListMovies } from './styles';
 
 import api, { key } from '../../Services/api';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
+
+import SearchItem from '../../components/SearchItem'
 
 
 function Search(){
@@ -19,10 +21,17 @@ function Search(){
         async function getSearchMovie(){
             const response = await api.get('/search/movie', {
                 params:{
-                    query: route?.params?.name
+                    query: route?.params?.name,
+                    api_key: key,
+                    language: 'pt-BR',
+                    page: 1,
                 }
             })
-
+            
+            if(isActive){
+                setMovie(response.data.results);
+                setLoading(false);  
+            }
 
         }
 
@@ -36,6 +45,10 @@ function Search(){
 
     }, [])
     
+    function navigateDetailsPage(item){
+        navigation.navigate('Detail', { id: item.id })
+    }
+
     if(loading){
         return(
             <Container></Container>
@@ -46,8 +59,12 @@ function Search(){
 
     return(
         <Container>
-            
-            <Name>TESTE PROCURANDO</Name>
+         <ListMovies  
+            data={movie}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={ (item) => String(item.id)}
+            renderItem={ ({item }) => <SearchItem data={item} navigatePage={ () => navigateDetailsPage(item) } /> }
+         />
             
         </Container>
     )
